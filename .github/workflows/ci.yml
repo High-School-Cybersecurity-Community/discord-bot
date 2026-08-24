@@ -19,7 +19,7 @@ jobs:
             - uses: actions/setup-node@v7
               with:
                 node-version-file: ./package.json
-                cache: true
+                cache: 'pnpm'
                 cache-dependency-path: ./pnpm-lock.yaml
             
             - run: pnpm i
