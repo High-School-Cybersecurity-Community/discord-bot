@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "content-collections build && tsdown",
     "dev": "concurrently \"content-collections watch\" \"tsdown --watch\"",
-    "lint": "oxlint",
+    "lint": "oxlint --tsconfig ./tsconfig.json",
     "fmt": "oxfmt",
     "prepare": "husky"
   },
