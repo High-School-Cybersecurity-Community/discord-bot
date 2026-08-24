@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "content-collections build && tsdown",
     "dev": "concurrently \"content-collections watch\" \"tsdown --watch\"",
-    "lint": "oxlint --tsconfig ./tsconfig.json",
+    "types": "tsc",
+    "lint": "oxlint",
     "fmt": "oxfmt",
     "prepare": "husky"
   },
@@ -18,11 +19,9 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "^11.15.0",
+      "version": "11.22.0",
       "onFail": "download"
-    }
-  },
-  "engines": {
+    },
     "runtime": {
       "name": "node",
       "onFail": "warn",

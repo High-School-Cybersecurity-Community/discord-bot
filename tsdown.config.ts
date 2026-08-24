@@ -7,4 +7,6 @@ const env = Object.fromEntries(
 
 export default defineConfig({
     env,
+    minify: true,
+    sourcemap: true,
 })
