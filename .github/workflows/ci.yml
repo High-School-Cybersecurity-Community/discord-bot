@@ -26,7 +26,7 @@ jobs:
                     .content-collections/
                     dist/
                 key: build-cache-${{ github.repository }}-${{ github.ref_name }}-${{ github.run_id }}${{ github.run_attempt }}
-                restore-keys: build-cache-${{ github.repository }}-${{ github.ref_name }}
+                restore-keys: build-cache-${{ github.repository }}-${{ github.ref_name }}-
 
             - run: pnpm build
             - run: pnpm lint
