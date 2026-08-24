@@ -1,0 +1,28 @@
+name: CI
+
+on:
+    push:
+    pull_request:
+
+permissions: {}
+
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                persist-credentials: false
+            
+            - uses: pnpm/action-setup@v6
+
+            - uses: actions/setup-node@v7
+              with:
+                node-version-file: ./package-json
+                cache: true
+                cache-dependency-path: ./pnpm-lock.yaml
+            
+            - run: pnpm i
+            - run: pnpm lint
+            - run: pnpm fmt
+            - run: pnpm build
