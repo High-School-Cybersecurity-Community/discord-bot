@@ -1,6 +1,6 @@
 import 'dotenv/config'
 
-import { ActivityType, ChatInputCommandInteraction, Client, EmbedBuilder, Events, GatewayIntentBits, REST, Routes, SlashCommandBooleanOption, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js'
+import { ActivityType, ChatInputCommandInteraction, Client, Events, GatewayIntentBits, REST, Routes, SlashCommandBooleanOption, SlashCommandBuilder, SlashCommandStringOption } from 'discord.js'
 
 import { doTags } from "./tags"
 

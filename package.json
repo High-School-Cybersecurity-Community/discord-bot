@@ -11,7 +11,8 @@
     "types": "tsc",
     "lint": "oxlint",
     "fmt": "oxfmt",
-    "prepare": "husky"
+    "prepare": "husky",
+    "ci": "pnpm build; pnpm lint; pnpm fmt; pnpm types;"
   },
   "keywords": [],
   "author": "",
