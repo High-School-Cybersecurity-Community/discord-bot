@@ -14,6 +14,7 @@ import {
 } from 'discord.js';
 
 import { doTags } from './tags';
+import { doClose, doSupport, ensureSupportPanel, handleSupportButton } from './support';
 
 const { DISCORD_BOT_TOKEN, DISCORD_CLIENT_ID } = process.env;
 if (!DISCORD_BOT_TOKEN || !DISCORD_CLIENT_ID) {
@@ -21,6 +22,8 @@ if (!DISCORD_BOT_TOKEN || !DISCORD_CLIENT_ID) {
 }
 
 const commands = [
+	new SlashCommandBuilder().setName('support').setDescription('Open a private support ticket.'),
+	new SlashCommandBuilder().setName('close').setDescription('Close the current support ticket.'),
 	new SlashCommandBuilder()
 		.setName('tags')
 		.setDescription('Get a Markdown tag')
@@ -34,6 +37,8 @@ const commands = [
 ];
 
 const commandMap: Record<string, (interaction: ChatInputCommandInteraction) => Promise<void>> = {
+	support: doSupport,
+	close: doClose,
 	tags: doTags,
 };
 
@@ -63,9 +68,14 @@ client.once(Events.ClientReady, (c) => {
 		],
 		status: 'online',
 	});
+	ensureSupportPanel(c).catch(console.error);
 });
 
 client.on(Events.InteractionCreate, async (m) => {
+	if (m.isButton()) {
+		await handleSupportButton(m);
+		return;
+	}
 	if (m.isChatInputCommand()) {
 		const command = commandMap[m.commandName];
 		if (!command) {
