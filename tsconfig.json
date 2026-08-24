@@ -17,6 +17,10 @@
     // "types": ["node"],
     // and npm install -D @types/node
 
+    "paths": {
+      "@content": ["./content-collections/generated"]
+    },
+
     // Other Outputs
     "sourceMap": true,
     "declaration": true,
