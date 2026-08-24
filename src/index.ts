@@ -22,3 +22,5 @@ client.on(Events.MessageCreate, async (m) => {
         await m.forward('1541235184450543646')
     }
 })
+
+await client.login(env.DISCORD_BOT_TOKEN)
