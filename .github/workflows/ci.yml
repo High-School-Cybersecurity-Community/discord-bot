@@ -19,7 +19,7 @@ jobs:
                 cache: true
                 install: true
 
+            - run: pnpm build
             - run: pnpm lint
             - run: pnpm fmt
             - run: pnpm types
-            - run: pnpm build
