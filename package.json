@@ -1,0 +1,44 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "oxlint",
+    "fmt": "oxfmt",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.15.0",
+      "onFail": "download"
+    }
+  },
+  "nano-staged": {
+    "*.{js|ts}": [
+      "pn run lint --fix",
+      "pn run fmt"
+    ]
+  },
+  "type": "module",
+  "dependencies": {
+    "@t3-oss/env-core": "^0.13.11",
+    "discord.js": "^14.27.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.1",
+    "@types/node": "^26.2.0",
+    "husky": "^9.1.7",
+    "nano-staged": "^1.0.2",
+    "oxfmt": "^0.64.0",
+    "oxlint": "^1.79.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "tsdown": "^0.22.14"
+  }
+}
