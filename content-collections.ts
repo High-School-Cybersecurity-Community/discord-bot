@@ -8,7 +8,7 @@ const tags = defineCollection({
     schema: z.object({
         title: z.string(),
         author: z.string(),
-        footer: z.string(),
+        footer: z.string().optional(),
     })
 })
 
