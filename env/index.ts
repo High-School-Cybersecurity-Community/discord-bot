@@ -9,7 +9,8 @@ export const env = createEnv({
         PUBLIC_BUILD_VERSION: z.string().default(version)
     },
     server: {
-        DISCORD_BOT_TOKEN: z.string()
+        DISCORD_BOT_TOKEN: z.string(),
+        DISCORD_CLIENT_ID: z.string()
     },
     runtimeEnv: process.env,
     emptyStringAsUndefined: true,
