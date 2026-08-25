@@ -10,7 +10,7 @@
 	"main": "dist/index.mjs",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node --env-file-if-exists dist/index.mjs",
+		"start": "node --env-file-if-exists=.env dist/index.mjs",
 		"build": "content-collections build && tsdown",
 		"dev": "pnpm build && concurrently \"content-collections watch\" \"tsdown --watch\" \"node --watch dist/index.mjs\"",
 		"types": "tsc",
