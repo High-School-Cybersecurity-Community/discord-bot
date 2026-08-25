@@ -1,5 +1,3 @@
-import 'dotenv/config';
-
 import {
 	ActivityType,
 	ChatInputCommandInteraction,
@@ -16,7 +14,7 @@ import {
 import { doTags } from './tags';
 import { doClose, doSupport, ensureSupportPanel, handleSupportButton } from './support';
 
-import { env } from '../env'
+import { env } from '../env';
 
 const commands = [
 	new SlashCommandBuilder().setName('support').setDescription('Open a private support ticket.'),
@@ -59,7 +57,7 @@ client.once(Events.ClientReady, (c) => {
 	c.user.setPresence({
 		activities: [
 			{
-				name: `:robot: Version ${process.env.PUBLIC_BUILD_VERSION}`,
+				name: `:robot: Version ${env.PUBLIC_BUILD_VERSION}`,
 				type: ActivityType.Custom,
 			},
 		],

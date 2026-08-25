@@ -22,7 +22,6 @@
 		"@content-collections/core": "^0.15.2",
 		"@t3-oss/env-core": "^0.13.11",
 		"discord.js": "^14.27.0",
-		"dotenv": "^17.4.2",
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {
@@ -40,6 +39,12 @@
 	"nano-staged": {
 		"*.{js|ts}": [
 			"pn run lint --fix",
+			"pn run fmt"
+		],
+		"*.json": [
+			"pn run fmt"
+		],
+		"*.{yaml,yml}": [
 			"pn run fmt"
 		]
 	},

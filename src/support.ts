@@ -12,7 +12,7 @@ import {
 	TextChannel,
 } from 'discord.js';
 
-import {env} from '../env'
+import { env } from '../env';
 
 const moderatorRole = env.MOD_ROLE;
 const panelChannelId = env.SUPPORT_SERVER_CHANNEL;
