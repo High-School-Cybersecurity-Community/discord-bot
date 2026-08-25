@@ -216,6 +216,9 @@ importers:
       discord.js:
         specifier: ^14.27.0
         version: 14.27.0
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -1290,6 +1293,10 @@ packages:
   discord.js@14.27.0:
     resolution: {integrity: sha512-qHbFlFG2N7y3LjPySYsL6A1+BnX6bkTVgo842EX0CqVPk/KTMwZkojPHEXKsQUpWZNyz5BISNHK1cPpQw0+m4A==}
     engines: {node: '>=18'}
+
+  dotenv@17.4.2:
+    resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
+    engines: {node: '>=12'}
 
   dts-resolver@3.0.0:
     resolution: {integrity: sha512-1T1f+z+4tl9XD+m+0HBgWoL/nm0bOIffyWaUuUSBlFg/86IWvfx+wjNaO/ybU0AJzG9/Mi5hBUgGV6zCmWEN7Q==}
@@ -2410,6 +2417,8 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+
+  dotenv@17.4.2: {}
 
   dts-resolver@3.0.0: {}
 

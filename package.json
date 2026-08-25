@@ -1,56 +1,57 @@
 {
-  "name": "discord-bot",
-  "private": true,
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "content-collections build && tsdown",
-    "dev": "concurrently \"content-collections watch\" \"tsdown --watch\"",
-    "types": "tsc",
-    "lint": "oxlint",
-    "fmt": "oxfmt",
-    "prepare": "husky"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "11.22.0",
-      "onFail": "download"
-    },
-    "runtime": {
-      "name": "node",
-      "onFail": "warn",
-      "version": "^26"
-    }
-  },
-  "nano-staged": {
-    "*.{js|ts}": [
-      "pn run lint --fix",
-      "pn run fmt"
-    ]
-  },
-  "type": "module",
-  "dependencies": {
-    "@content-collections/core": "^0.15.2",
-    "@t3-oss/env-core": "^0.13.11",
-    "discord.js": "^14.27.0",
-    "zod": "^4.4.3"
-  },
-  "devDependencies": {
-    "@changesets/cli": "^3.0.1",
-    "@content-collections/cli": "^0.1.9",
-    "@types/node": "^26.2.0",
-    "concurrently": "^10.0.5",
-    "husky": "^9.1.7",
-    "nano-staged": "^1.0.2",
-    "oxfmt": "^0.64.0",
-    "oxlint": "^1.79.0",
-    "oxlint-tsgolint": "^7.0.2001",
-    "tsdown": "^0.22.14"
-  }
+	"name": "discord-bot",
+	"version": "1.0.0",
+	"private": true,
+	"description": "",
+	"keywords": [],
+	"license": "ISC",
+	"author": "",
+	"type": "module",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "content-collections build && tsdown",
+		"dev": "pnpm build && concurrently \"content-collections watch\" \"tsdown --watch\" \"node --watch dist/index.mjs\"",
+		"types": "tsc",
+		"lint": "oxlint",
+		"fmt": "oxfmt",
+		"prepare": "husky"
+	},
+	"dependencies": {
+		"@content-collections/core": "^0.15.2",
+		"@t3-oss/env-core": "^0.13.11",
+		"discord.js": "^14.27.0",
+		"dotenv": "^17.4.2",
+		"zod": "^4.4.3"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^3.0.1",
+		"@content-collections/cli": "^0.1.9",
+		"@types/node": "^26.2.0",
+		"concurrently": "^10.0.5",
+		"husky": "^9.1.7",
+		"nano-staged": "^1.0.2",
+		"oxfmt": "^0.64.0",
+		"oxlint": "^1.79.0",
+		"oxlint-tsgolint": "^7.0.2001",
+		"tsdown": "^0.22.14"
+	},
+	"nano-staged": {
+		"*.{js|ts}": [
+			"pn run lint --fix",
+			"pn run fmt"
+		]
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "11.22.0",
+			"onFail": "download"
+		},
+		"runtime": {
+			"name": "node",
+			"version": "^26",
+			"onFail": "warn"
+		}
+	}
 }
