@@ -1,0 +1,4 @@
+{
+    "name": "discord-bot-auth-throwaway",
+    "main": "server/index.ts",
+}
