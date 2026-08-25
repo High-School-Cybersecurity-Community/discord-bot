@@ -12,9 +12,11 @@ import {
 	TextChannel,
 } from 'discord.js';
 
-const moderatorRole = process.env.MOD_ROLE;
-const panelChannelId = process.env.SUPPORT_SERVER_CHANNEL;
-const ticketCategoryId = process.env.SUPPORT_TICKET_CATEGORY;
+import {env} from '../env'
+
+const moderatorRole = env.MOD_ROLE;
+const panelChannelId = env.SUPPORT_SERVER_CHANNEL;
+const ticketCategoryId = env.SUPPORT_TICKET_CATEGORY;
 
 const panelEmbed = new EmbedBuilder().setTitle('Support Ticket').setDescription('Create a ticket to speak to the mods');
 const panelRow = new ActionRowBuilder<ButtonBuilder>().addComponents(

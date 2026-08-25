@@ -13,20 +13,20 @@ jobs:
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
-                  persist-credentials: false
-
+                persist-credentials: false
+            
             - uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
               with:
-                  cache: true
-                  install: true
+                cache: true
+                install: true
             
             - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               with:
-                  path: |
-                      .content-collections/
-                      dist/
-                  key: build-cache-${{ github.repository }}-${{ github.ref_name }}-${{ github.run_id }}${{ github.run_attempt }}
-                  restore-keys: build-cache-${{ github.repository }}-${{ github.ref_name }}
+                path: |
+                    .content-collections/
+                    dist/
+                key: build-cache-${{ github.repository }}-${{ github.ref_name }}-${{ github.run_id }}${{ github.run_attempt }}
+                restore-keys: build-cache-${{ github.repository }}-${{ github.ref_name }}-
 
             - run: pnpm build
             - run: pnpm lint

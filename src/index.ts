@@ -16,10 +16,7 @@ import {
 import { doTags } from './tags';
 import { doClose, doSupport, ensureSupportPanel, handleSupportButton } from './support';
 
-const { DISCORD_BOT_TOKEN, DISCORD_CLIENT_ID } = process.env;
-if (!DISCORD_BOT_TOKEN || !DISCORD_CLIENT_ID) {
-	throw new Error('DISCORD_BOT_TOKEN and DISCORD_CLIENT_ID must be set');
-}
+import { env } from '../env'
 
 const commands = [
 	new SlashCommandBuilder().setName('support').setDescription('Open a private support ticket.'),
@@ -42,12 +39,12 @@ const commandMap: Record<string, (interaction: ChatInputCommandInteraction) => P
 	tags: doTags,
 };
 
-const rest = new REST({ version: '10' }).setToken(DISCORD_BOT_TOKEN);
+const rest = new REST({ version: '10' }).setToken(env.DISCORD_BOT_TOKEN);
 
 try {
 	console.log('Started refreshing application (/) commands.');
 
-	await rest.put(Routes.applicationCommands(DISCORD_CLIENT_ID), { body: commands });
+	await rest.put(Routes.applicationCommands(env.DISCORD_CLIENT_ID), { body: commands });
 
 	console.log('Successfully reloaded application (/) commands.');
 } catch (error) {
@@ -97,6 +94,6 @@ client.on(Events.MessageCreate, async (m) => {
 	}
 });
 
-await client.login(DISCORD_BOT_TOKEN).then(() => {
+await client.login(env.DISCORD_BOT_TOKEN).then(() => {
 	console.log('Ding! Fries are done!');
 });
