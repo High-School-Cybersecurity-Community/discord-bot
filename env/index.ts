@@ -10,7 +10,13 @@ export const env = createEnv({
     },
     server: {
         DISCORD_BOT_TOKEN: z.string(),
-        DISCORD_CLIENT_ID: z.string()
+        DISCORD_CLIENT_ID: z.string(),
+
+        MOD_ROLE: z.string(),
+
+        // support
+        SUPPORT_SERVER_CHANNEL: z.string(),
+        SUPPORT_TICKET_CATEGORY: z.string(),
     },
     runtimeEnv: process.env,
     emptyStringAsUndefined: true,

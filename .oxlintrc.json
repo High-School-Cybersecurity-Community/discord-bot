@@ -1,25 +1,15 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "typescript",
-    "unicorn",
-    "oxc",
-    "eslint",
-    "import",
-    "promise",
-    "unicorn",
-    "jsdoc",
-    "node"
-  ],
-  "categories": {
-    "correctness": "error"
-  },
-  "rules": {},
-  "env": {
-    "builtin": true
-  },
-  "options": {
-    "typeAware": true,
-    "typeCheck": false,
-  }
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["typescript", "unicorn", "oxc", "eslint", "import", "promise", "unicorn", "jsdoc", "node"],
+	"categories": {
+		"correctness": "error"
+	},
+	"rules": {},
+	"env": {
+		"builtin": true
+	},
+	"options": {
+		"typeAware": true,
+		"typeCheck": false
+	}
 }
