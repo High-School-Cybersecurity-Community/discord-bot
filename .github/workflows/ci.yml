@@ -8,7 +8,7 @@ on:
 permissions: {}
 
 jobs:
-    ci:
+    code:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -29,6 +29,20 @@ jobs:
                 restore-keys: build-cache-${{ github.repository }}-${{ github.ref_name }}-
 
             - run: pnpm build
-            - run: pnpm lint
-            - run: pnpm fmt
-            - run: pnpm types
+
+            - parallel:
+                - run: pnpm lint
+                - run: pnpm fmt --check
+                - run: pnpm types
+    zizmor:
+        permissions:
+            security-events: write
+            contents: read
+            actions: read
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+              with:
+                persist-credentials: false
+            
+            - uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v6.0.2
