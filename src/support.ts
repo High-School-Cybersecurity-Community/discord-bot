@@ -13,6 +13,7 @@ import {
 } from 'discord.js';
 
 import { env } from '../env';
+import { logger } from './logger';
 
 const moderatorRole = env.MOD_ROLE;
 const panelChannelId = env.SUPPORT_SERVER_CHANNEL;
@@ -27,7 +28,7 @@ export async function ensureSupportPanel(client: Client<true>) {
 	if (!panelChannelId) return;
 	const channel = await client.channels.fetch(panelChannelId);
 	if (!channel || !channel.isTextBased() || channel.isDMBased()) {
-		console.error('SUPPORT_SERVER_CHANNEL must be a server text channel');
+		logger.error('SUPPORT_SERVER_CHANNEL must be a server text channel');
 		return;
 	}
 

@@ -22,6 +22,7 @@
 		"@content-collections/core": "^0.15.2",
 		"@t3-oss/env-core": "^0.13.11",
 		"discord.js": "^14.27.0",
+		"winston": "^3.19.0",
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {
@@ -42,9 +43,6 @@
 			"pn run fmt"
 		],
 		"*.json": [
-			"pn run fmt"
-		],
-		"*.{yaml,yml}": [
 			"pn run fmt"
 		]
 	},

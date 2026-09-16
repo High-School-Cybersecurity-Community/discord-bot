@@ -13,8 +13,17 @@ import {
 
 import { doTags } from './tags';
 import { doClose, doSupport, ensureSupportPanel, handleSupportButton } from './support';
+import { logger } from './logger';
 
 import { env } from '../env';
+
+process.on('uncaughtException', (error) => {
+	logger.error('Uncaught exception', { error });
+});
+
+process.on('unhandledRejection', (reason) => {
+	logger.error('Unhandled rejection', { reason });
+});
 
 const commands = [
 	new SlashCommandBuilder().setName('support').setDescription('Open a private support ticket.'),
@@ -40,13 +49,13 @@ const commandMap: Record<string, (interaction: ChatInputCommandInteraction) => P
 const rest = new REST({ version: '10' }).setToken(env.DISCORD_BOT_TOKEN);
 
 try {
-	console.log('Started refreshing application (/) commands.');
+	logger.info('Started refreshing application (/) commands.');
 
 	await rest.put(Routes.applicationCommands(env.DISCORD_CLIENT_ID), { body: commands });
 
-	console.log('Successfully reloaded application (/) commands.');
+	logger.info('Successfully reloaded application (/) commands.');
 } catch (error) {
-	console.error(error);
+	logger.error('Failed to refresh application (/) commands', { error });
 }
 
 const client = new Client({
@@ -63,35 +72,60 @@ client.once(Events.ClientReady, (c) => {
 		],
 		status: 'online',
 	});
-	ensureSupportPanel(c).catch(console.error);
+	ensureSupportPanel(c).catch((error) => logger.error('Failed to ensure support panel', { error }));
+});
+
+client.on(Events.Error, (error) => {
+	logger.error('Client error', { error });
+});
+
+client.on(Events.ShardError, (error) => {
+	logger.error('Shard error', { error });
 });
 
 client.on(Events.InteractionCreate, async (m) => {
-	if (m.isButton()) {
-		await handleSupportButton(m);
-		return;
-	}
-	if (m.isChatInputCommand()) {
-		const command = commandMap[m.commandName];
-		if (!command) {
-			await m.reply({
-				content: 'Unknown command!',
-				flags: ['Ephemeral'],
-			});
+	try {
+		if (m.isButton()) {
+			await handleSupportButton(m);
 			return;
-		} else {
-			await command(m);
+		}
+		if (m.isChatInputCommand()) {
+			const command = commandMap[m.commandName];
+			if (!command) {
+				await m.reply({
+					content: 'Unknown command!',
+					flags: ['Ephemeral'],
+				});
+				return;
+			} else {
+				await command(m);
+			}
+		}
+	} catch (error) {
+		logger.error('Failed to handle interaction', {
+			error,
+			customId: m.isButton() ? m.customId : undefined,
+			commandName: m.isCommand() ? m.commandName : undefined,
+		});
+		if (m.isRepliable() && !m.replied && !m.deferred) {
+			await m
+				.reply({ content: 'Something went wrong while processing that. Please try again.', flags: ['Ephemeral'] })
+				.catch((replyError) => logger.error('Failed to send error reply', { error: replyError }));
 		}
 	}
 });
 
 client.on(Events.MessageCreate, async (m) => {
-	if (m.channelId === '1541374516524220426') {
-		// what is this number??? put in dotenv plz
-		await m.forward('1541235184450543646');
+	try {
+		if (m.channelId === '1541374516524220426') {
+			// what is this number??? put in dotenv plz
+			await m.forward('1541235184450543646');
+		}
+	} catch (error) {
+		logger.error('Failed to handle message', { error, messageId: m.id });
 	}
 });
 
 await client.login(env.DISCORD_BOT_TOKEN).then(() => {
-	console.log('Ding! Fries are done!');
+	logger.info('Ding! Fries are done!');
 });
