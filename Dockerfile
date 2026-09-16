@@ -7,6 +7,7 @@ COPY package.json ./
 COPY pnpm-lock.yaml ./
 COPY pnpm-workspace.yaml ./
 
+RUN pnpm runtime set $(pnpm pkg get devEngines.runtime.name) $(pnpm pkg get devEngines.runtime.version)
 RUN pnpm install --frozen-lockfile
 
 COPY . .
@@ -19,6 +20,7 @@ COPY package.json ./
 COPY pnpm-lock.yaml ./
 COPY pnpm-workspace.yaml ./
 
+RUN pnpm runtime set $(pnpm pkg get devEngines.runtime.name) $(pnpm pkg get devEngines.runtime.version)
 RUN pnpm install --prod --frozen-lockfile
 COPY --from=build dist ./
 
