@@ -16,7 +16,7 @@
 		"types": "tsc",
 		"lint": "oxlint",
 		"fmt": "oxfmt",
-		"prepare": "husky"
+		"prepare": "husky || echo \"Skipped husky hook setup\""
 	},
 	"dependencies": {
 		"@content-collections/core": "^0.15.2",
