@@ -1,5 +1,4 @@
 FROM ghcr.io/pnpm/pnpm:12 AS build
-USER node
 ARG buildVersion
 
 ENV PUBLIC_BUILD_VERSION=${buildVersion}
