@@ -22,6 +22,6 @@ COPY pnpm-workspace.yaml ./
 
 RUN pnpm runtime set $(pnpm pkg get devEngines.runtime.name) $(pnpm pkg get devEngines.runtime.version)
 RUN pnpm install --prod --frozen-lockfile
-    COPY --from=build /source/dist ./
+COPY --from=build /source/dist ./
 
 CMD ["pnpm", "start"]
