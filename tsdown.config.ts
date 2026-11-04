@@ -6,4 +6,7 @@ export default defineConfig({
 	env,
 	minify: true,
 	sourcemap: true,
+	deps: {
+		alwaysBundle: () => true
+	}
 });
