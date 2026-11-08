@@ -1,5 +1,6 @@
 ---
 title: HSCC Official Sites
+author: HSCC
 ---
 
 - Main Website: https://hscyber.org/

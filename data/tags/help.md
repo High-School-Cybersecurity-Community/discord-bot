@@ -1,10 +1,12 @@
 ---
 title: HSCC Bot Help
+author: HSCC
 ---
 
 Use `/tags` and pick a tag from the list to get its info.
 
 **Available tags**
+
 - `emails`: HSCC official contact emails
 - `events`: HSCC official events
 - `sites`: HSCC official websites

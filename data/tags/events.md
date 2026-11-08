@@ -1,5 +1,6 @@
 ---
 title: HSCC Official Events
+author: HSCC
 ---
 
 # Outback Overflow '26:
