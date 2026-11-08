@@ -8,7 +8,7 @@ export const TAGS = allTags
 		value: t._meta.path,
 	}));
 
-async function sendTags(interaction: ChatInputCommandInteraction, id: string, ephemeral: boolean) {
+async function sendTag(interaction: ChatInputCommandInteraction, id: string, ephemeral: boolean) {
 	const tag = allTags.find((v) => v._meta.path === id);
 	if (!tag) {
 		await interaction.reply({
@@ -36,9 +36,9 @@ async function sendTags(interaction: ChatInputCommandInteraction, id: string, ep
 export async function doTags(interaction: ChatInputCommandInteraction) {
 	const id = interaction.options.getString('tag_name', true);
 	const ephemeral = interaction.options.getBoolean('ephemeral', false) ?? false;
-	await sendTags(interaction, id, ephemeral);
+	await sendTag(interaction, id, ephemeral);
 }
 
 export async function doHelp(interaction: ChatInputCommandInteraction) {
-	await sendTags(interaction, 'help', true);
+	await sendTag(interaction, 'help', true);
 }
