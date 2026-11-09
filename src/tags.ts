@@ -1,8 +1,15 @@
 import { allTags } from '@content';
 import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
 
-export async function doTags(interaction: ChatInputCommandInteraction) {
-	const tag = allTags.find((v) => v._meta.fileName);
+export const TAGS = allTags
+	.filter((t) => t._meta.path !== 'help')
+	.map((t) => ({
+		name: t.title,
+		value: t._meta.path,
+	}));
+
+async function sendTag(interaction: ChatInputCommandInteraction, id: string, ephemeral: boolean) {
+	const tag = allTags.find((v) => v._meta.path === id);
 	if (!tag) {
 		await interaction.reply({
 			content: "I couldn't find a tag by that ID!",
@@ -21,7 +28,17 @@ export async function doTags(interaction: ChatInputCommandInteraction) {
 		});
 	await interaction.reply({
 		embeds: [embed],
-		flags: interaction.options.getBoolean('ephemeral', false) ? ['Ephemeral'] : [],
+		flags: ephemeral ? ['Ephemeral'] : [],
 	});
 	return;
+}
+
+export async function doTags(interaction: ChatInputCommandInteraction) {
+	const id = interaction.options.getString('tag_name', true);
+	const ephemeral = interaction.options.getBoolean('ephemeral', false) ?? false;
+	await sendTag(interaction, id, ephemeral);
+}
+
+export async function doHelp(interaction: ChatInputCommandInteraction) {
+	await sendTag(interaction, 'help', true);
 }

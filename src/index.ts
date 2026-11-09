@@ -11,7 +11,7 @@ import {
 	SlashCommandStringOption,
 } from 'discord.js';
 
-import { doTags } from './tags';
+import { doTags, doHelp, TAGS } from './tags';
 import { doClose, doSupport, ensureSupportPanel, handleSupportButton } from './support';
 import { logger } from './logger';
 
@@ -31,19 +31,27 @@ const commands = [
 	new SlashCommandBuilder()
 		.setName('tags')
 		.setDescription('Get a Markdown tag')
-		.addStringOption(new SlashCommandStringOption().setName('tag_name').setDescription('ID of the tag you want to retrieve').setRequired(true))
+		.addStringOption(
+			new SlashCommandStringOption()
+				.setName('tag_name')
+				.setDescription('ID of the tag you want to retrieve')
+				.setRequired(true)
+				.addChoices(...TAGS),
+		)
 		.addBooleanOption(
 			new SlashCommandBooleanOption()
 				.setName('ephemeral')
 				.setDescription('Whether to hide it to just yourself or post it publicly.')
 				.setRequired(false),
 		),
+	new SlashCommandBuilder().setName('help').setDescription('Display help message'),
 ];
 
 const commandMap: Record<string, (interaction: ChatInputCommandInteraction) => Promise<void>> = {
 	support: doSupport,
 	close: doClose,
 	tags: doTags,
+	help: doHelp,
 };
 
 const rest = new REST({ version: '10' }).setToken(env.DISCORD_BOT_TOKEN);
@@ -109,7 +117,10 @@ client.on(Events.InteractionCreate, async (m) => {
 		});
 		if (m.isRepliable() && !m.replied && !m.deferred) {
 			await m
-				.reply({ content: 'Something went wrong while processing that. Please try again.', flags: ['Ephemeral'] })
+				.reply({
+					content: 'Something went wrong while processing that. Please try again.',
+					flags: ['Ephemeral'],
+				})
 				.catch((replyError) => logger.error('Failed to send error reply', { error: replyError }));
 		}
 	}
