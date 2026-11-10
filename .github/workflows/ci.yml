@@ -28,7 +28,7 @@ jobs:
                   key: build-cache-${{ github.repository }}-${{ github.ref_name }}-${{ github.run_id }}${{ github.run_attempt }}
                   restore-keys: build-cache-${{ github.repository }}-${{ github.ref_name }}-
 
-            - run: pnpm build
+            - run: pnpm codegen --check
 
             - parallel:
                   - run: pnpm lint
