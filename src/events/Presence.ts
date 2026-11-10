@@ -14,7 +14,7 @@ export class Presence extends EventHandler<Events.ClientReady> {
             activities: [
                 {
                     // A runtime override wins, like the old Dockerfile set it; otherwise the package version.
-                    name: `:robot: Version ${Envapter.get('PUBLIC_BUILD_VERSION', version)}`,
+                    name: `:robot: Version ${Envapter.get('VITE_BUILD_VERSION', version)}`,
                     type: ActivityType.Custom
                 }
             ],

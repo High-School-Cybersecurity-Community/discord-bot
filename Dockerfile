@@ -1,21 +1,36 @@
 FROM ghcr.io/pnpm/pnpm:12 AS build
+
 ARG buildVersion
-ENV PUBLIC_BUILD_VERSION=${buildVersion}
-WORKDIR /source
+ENV VITE_BUILD_VERSION=${buildVersion}
 
-COPY package.json ./
-COPY pnpm-lock.yaml ./
-COPY pnpm-workspace.yaml ./
+WORKDIR /app
 
-RUN pnpm runtime set $(pnpm pkg get devEngines.runtime.name) $(pnpm pkg get devEngines.runtime.version)
+COPY ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./
+
 RUN pnpm install --frozen-lockfile
 
 COPY . .
-RUN pnpm build
 
-FROM node:26-slim AS run
+RUN pnpm run build
+
+FROM ghcr.io/pnpm/pnpm:12 AS deps
+
 WORKDIR /app
 
-COPY --from=build /source/dist ./
+COPY ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./
 
-CMD ["node", "--env-file-if-exists=.env", "index.mjs"]
+RUN pnpm install --frozen-lockfile --prod
+
+FROM node:26-slim AS run
+
+WORKDIR /app
+
+COPY --from=build /app/dist/ ./dist
+COPY --from=deps /app/node_modules/ ./node_modules
+
+HEALTHCHECK --interval=30s --retries=3 --start-interval=5s --start-period=5s --timeout=30s \
+    CMD ["node", "--input-type=module", "-e", "const response = await fetch('http://localhost:6967/health'); if (!response.ok) throw new Error(`HTTP ${response.status}`)"]
+
+EXPOSE 6967
+
+CMD ["node", "--enable-source-maps", "dist/index.mjs"]
