@@ -40,6 +40,13 @@
 		"vite": "^8.3.6",
 		"zod": "^4.6.7"
 	},
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": "^26",
+			"onFail": "download"
+		}
+	},
 	"engines": {
 		"node": "^24.22.1 || >=26.12.1"
 	}
