@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: hscc-bot
+    restart: unless-stopped
     env_file: ./.env
     ports:
       - 6967:6967
