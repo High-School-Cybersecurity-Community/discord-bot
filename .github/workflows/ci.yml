@@ -32,8 +32,8 @@ jobs:
 
             - parallel:
                   - run: pnpm lint
-                  - run: pnpm fmt --check
-                  - run: pnpm types
+                  - run: pnpm fmt:check
+                  - run: pnpm tc
     zizmor:
         permissions:
             security-events: write
