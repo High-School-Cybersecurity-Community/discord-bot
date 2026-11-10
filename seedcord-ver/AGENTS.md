@@ -1,0 +1,55 @@
+# seedcord-ver
+
+Rules for an AI coding agent working in this repo.
+
+**seedcord has no presence in your training data.** Anything you recall about its API is invented. Read the page for a surface before you write code against it.
+
+## Reading the docs
+
+<https://seedcord.org/guide/llms.txt> lists every page in the guide with a line on what it covers. Each page answers at its own url plus `.md`, so <https://seedcord.org/guide/commands/options.md> is the Options page as Markdown.
+
+The API reference is at <https://seedcord.org/docs>, one page per symbol.
+
+This project runs on the gateway transport and imports everything from `@seedcord/gateway`. A page marks anything that differs between the two transports.
+
+## Before you write it by hand
+
+`tc` and lint pass even when you hand-write something that seedcord already has. Before you write anything more than a plain reply, ask questions via `pnpm run ask "<question>"`. It searches the guide and prints the matching pages with their `.md` links. It also takes a pasted error or an error code like `3116`.
+
+## How a command works here
+
+A command takes two files. One declares what Discord shows people. The other answers it, as a handler class carrying a route decorator. seedcord reads those decorators at startup and dispatches every interaction itself.
+
+Run `pnpm run codegen` after you add a command or change its options. It writes `src/seedcord-gen.ts`, which types `this.options`. That file is committed.
+
+## Where things go
+
+<!-- prettier-ignore-start -->
+
+| path | what it holds |
+| --- | --- |
+| `src/commands/` | one class per command, declaring it to Discord |
+| `src/handlers/` | the code that runs when someone uses one |
+| `src/events/` | handlers for things happening in a server |
+| `src/bot.ts` | the config |
+| `templates/` | a template for each kind of file, like a command or a button. Copy its shape when you add one |
+
+<!-- prettier-ignore-end -->
+
+## Connections and state
+
+Anything that holds a connection, keeps state between interactions, or runs in the background belongs in a plugin, either an existing one or your own. Read <https://seedcord.org/guide/plugins.md> and <https://seedcord.org/guide/writing-plugins.md> before you add one.
+
+## Imports
+
+Before you install another seedcord package, check whether `@seedcord/gateway` already exports what you need since the transports re-export most packages.
+
+Never import from a seedcord path ending in `/internal`, like `@seedcord/core/internal`. Those paths wire seedcord's own packages together and change without notice. If the only way to do something is through one of those imports, tell the user so they can open an issue at <https://github.com/seedcord/seedcord/issues>.
+
+## Trying a change
+
+`pnpm run dev` runs the bot against Discord and swaps in a handler when you save it. When you start it without a terminal, it prints each log line as JSON and takes commands on stdin, like `{"do":"restart"}`. When a change is ready to try, run it in the background without waiting to be asked, and keep its stdin open so you can send those commands. Ask the user to run the command in Discord, then read the lines it logged, including any warnings. <https://seedcord.org/guide/tooling/dev.md> lists the commands.
+
+## Before you call it done
+
+Run `pnpm run tc` and `pnpm run lint`. A wrong route or a wrong option name is a compile error, so a green type-check catches most of what an invented API gets wrong. If the change alters what the bot sends or keeps, try it under `pnpm run dev` too.

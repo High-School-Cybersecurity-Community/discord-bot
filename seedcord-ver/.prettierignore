@@ -1,0 +1,4 @@
+seedcord-gen.ts
+templates/
+# tag markdown is message content; prettier would reflow its line breaks
+src/data/
