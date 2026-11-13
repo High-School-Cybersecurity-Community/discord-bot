@@ -1,62 +1,59 @@
 {
-	"name": "discord-bot",
-	"version": "1.0.1",
+	"name": "seedcord-ver",
+	"version": "0.1.0",
 	"private": true,
-	"description": "",
-	"keywords": [],
-	"license": "ISC",
-	"author": "",
 	"type": "module",
-	"main": "dist/index.mjs",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node --env-file-if-exists=.env dist/index.mjs",
-		"build": "content-collections build && tsdown",
-		"dev": "pnpm build && concurrently \"content-collections watch\" \"tsdown --watch\" \"node --watch dist/index.mjs\"",
-		"types": "tsc",
-		"lint": "oxlint",
-		"fmt": "oxfmt",
-		"prepare": "husky || echo \"Skipped husky hook setup\""
+		"dev": "seedcord dev",
+		"build": "seedcord build",
+		"start": "node --enable-source-maps dist/index.mjs",
+		"codegen": "seedcord codegen",
+		"make": "seedcord make",
+		"ask": "seedcord ask",
+		"commands": "seedcord commands",
+		"commands:deploy": "seedcord commands deploy",
+		"tc": "tsc --noEmit",
+		"lint": "eslint \"src/**/*.ts\" --cache",
+		"lint:fix": "eslint \"src/**/*.ts\" --fix --cache",
+		"fmt": "prettier --write \"src/**/*.{ts,json,md}\" --cache",
+		"fmt:check": "prettier --check \"src/**/*.{ts,json,md}\" --cache",
+		"check": "pnpm run tc && pnpm run lint && pnpm run fmt:check"
 	},
 	"dependencies": {
-		"@content-collections/core": "^0.15.3",
-		"@t3-oss/env-core": "^0.13.11",
-		"discord.js": "^14.28.0",
-		"winston": "^3.19.0",
-		"zod": "^4.6.7"
+		"@discordjs/builders": "^1.15.0",
+		"@seedcord/gateway": "^0.10.0",
+		"discord-api-types": "^0.38.58",
+		"discord.js": "^14.28.1",
+		"envapt": "^9.2.0"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^3.0.3",
-		"@content-collections/cli": "^0.1.9",
+		"@content-collections/core": "^0.15.3",
+		"@content-collections/vite": "^0.3.1",
+		"@seedcord/eslint-config": "^3.0.1",
+		"@seedcord/tsconfig": "^3.0.0",
 		"@types/node": "^26.6.6",
-		"concurrently": "^10.0.6",
-		"husky": "^9.1.7",
-		"nano-staged": "^1.0.2",
-		"oxfmt": "^0.75.0",
-		"oxlint": "^1.90.0",
-		"oxlint-tsgolint": "^7.0.2005",
-		"tsdown": "^0.23.4",
-		"typescript": "^7.0.2"
-	},
-	"nano-staged": {
-		"*.{js|ts}": [
-			"pn run lint --fix",
-			"pn run fmt"
-		],
-		"*.json": [
-			"pn run fmt"
-		]
+		"eslint": "^10.14.0",
+		"jiti": "^2.7.0",
+		"prettier": "^3.9.10",
+		"seedcord": "^0.23.2",
+		"typescript": "~6.0.3",
+		"vite": "^8.3.6",
+		"zod": "^4.6.7"
 	},
 	"devEngines": {
-		"packageManager": {
-			"name": "pnpm",
-			"version": "11.22.0",
-			"onFail": "download"
-		},
 		"runtime": {
 			"name": "node",
-			"version": "^26.13.0",
+			"version": "^26",
 			"onFail": "download"
+		},
+		"packageManager": {
+			"name": "pnpm",
+			"version": "^12",
+			"onFail": "warn"
 		}
+	},
+	"engines": {
+		"node": "^24.22.1 || >=26.12.1"
 	}
 }

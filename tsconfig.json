@@ -1,49 +1,18 @@
 {
-	// Visit https://aka.ms/tsconfig to read more about this file
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": "@seedcord/tsconfig/node",
 	"compilerOptions": {
-		// File Layout
-		// "rootDir": "./src",
-		// "outDir": "./dist",
-
-		// Environment Settings
-		// See also https://aka.ms/tsconfig/module
-		"module": "preserve",
-		"moduleResolution": "bundler",
-		"target": "esnext",
-		"lib": ["ESNext"],
-		"types": ["node"],
-		// For nodejs:
-		// "lib": ["esnext"],
-		// "types": ["node"],
-		// and npm install -D @types/node
-
+		"module": "esnext",
+		"rootDir": "./",
+		"outDir": "./dist",
+		"types": ["node", "vite/client"],
 		"paths": {
-			"@content": ["./.content-collections/generated"]
-		},
-
-		// Other Outputs
-		"sourceMap": true,
-		"noEmit": true,
-
-		// Stricter Typechecking Options
-		"noUncheckedIndexedAccess": true,
-		"exactOptionalPropertyTypes": true,
-
-		// Style Options
-		// "noImplicitReturns": true,
-		// "noImplicitOverride": true,
-		// "noUnusedLocals": true,
-		// "noUnusedParameters": true,
-		// "noFallthroughCasesInSwitch": true,
-		// "noPropertyAccessFromIndexSignature": true,
-
-		// Recommended Options
-		"strict": true,
-		"verbatimModuleSyntax": true,
-		"isolatedModules": true,
-		"noUncheckedSideEffectImports": true,
-		"moduleDetection": "force",
-		"skipLibCheck": true
+			"#src/*": ["./src/*"],
+			"#components/*": ["./src/components/*"],
+			"#plugins/*": ["./src/plugins/*"],
+			"content-collections": ["./.content-collections/generated"]
+		}
 	},
-	"exclude": []
+	"include": ["src/**/*.ts", "content-collections.ts", "eslint.config.ts", "prettier.config.ts", "seedcord.config.ts"],
+	"exclude": ["node_modules", "dist"]
 }

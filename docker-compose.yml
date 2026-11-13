@@ -1,12 +1,12 @@
 services:
-    bot:
-        build:
-            dockerfile: ./Dockerfile
-            context: .
-            args:
-                - PUBLIC_BUILD_VERSION=${PUBLIC_BUILD_VERSION}
-        container_name: hscc-bot
-        env_file: ./.env
-        restart: unless-stopped
-        volumes:
-            - ./logs:/app/logs
+  bot:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: hscc-bot
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - 6967:6967
+    volumes:
+      - ./logs:/app/logs
