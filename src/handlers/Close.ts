@@ -35,7 +35,9 @@ export class Close extends SlashHandler<'close'> {
         const isModerator = this.event.memberPermissions.has(PermissionFlagsBits.ManageChannels);
         if (!isOwner && !isModerator) throw new NotTicketOwner();
 
-        await this.reply('Closing this ticket...');
+        // Acknowledge before the delete: under request-queue pressure the
+        // delete can wait long enough to outlast the reply window.
+        await this.defer();
         await channel.delete();
     }
 }

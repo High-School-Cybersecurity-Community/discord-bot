@@ -1,7 +1,9 @@
-import { ButtonHandler, ButtonRoute } from '@seedcord/gateway';
+import { ButtonHandler, ButtonRoute, Gated } from '@seedcord/gateway';
 import { ChannelType, PermissionFlagsBits } from 'discord.js';
 
 import { ChallengeHelpId, ReportPlayerId, SupportCreateId } from '#components/SupportPanel';
+
+import { TicketThrottle } from './gates/TicketThrottle';
 
 // The channel name is `<prefix>-` plus this many characters of the owner's
 // username, sized so the longest prefix, `challenge-`, stays inside Discord's
@@ -23,11 +25,15 @@ interface TicketKind {
  * open-ticket rule, one channel shape, and one `/close` format, so they belong
  * in one handler and branch on the clicked button's prefix.
  */
+@Gated(TicketThrottle)
 @ButtonRoute(SupportCreateId, ChallengeHelpId, ReportPlayerId)
 export class SupportCreate extends ButtonHandler<
     [typeof SupportCreateId, typeof ChallengeHelpId, typeof ReportPlayerId]
 > {
     public async execute(): Promise<void> {
+        // Channel creation can timeout the reply window under rate limits somehow so we defer
+        await this.defer();
+
         const kind = await this.match({
             'support-create': (): TicketKind => ({
                 channelPrefix: 'ticket',
@@ -61,7 +67,7 @@ export class SupportCreate extends ButtonHandler<
                 channel.topic === topic
         );
         if (existing) {
-            await this.reply(`You already have an open ${kind.topicType} ticket: <#${existing.id}>`);
+            await this.edit(`You already have an open ${kind.topicType} ticket: <#${existing.id}>`);
             return;
         }
 
@@ -103,6 +109,6 @@ export class SupportCreate extends ButtonHandler<
         });
 
         await channel.send(kind.welcome(owner));
-        await this.reply(`Your ticket is ready: <#${channel.id}>`);
+        await this.edit(`Your ticket is ready: <#${channel.id}>`);
     }
 }
