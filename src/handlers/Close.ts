@@ -1,5 +1,5 @@
 import { Notice, SlashHandler, SlashRoute } from '@seedcord/gateway';
-import { ChannelType, PermissionFlagsBits } from 'discord.js';
+import { ChannelType } from 'discord.js';
 
 class NotTicketChannel extends Notice {
     constructor() {
@@ -32,7 +32,7 @@ export class Close extends SlashHandler<'close'> {
         if (ownerPart?.startsWith('ticket-owner:') !== true) throw new NotATicket();
 
         const isOwner = ownerPart === `ticket-owner:${this.user.id}`;
-        const isModerator = this.event.memberPermissions.has(PermissionFlagsBits.ManageChannels);
+        const isModerator = this.event.member.roles.cache.has(this.core.support.modRole);
         if (!isOwner && !isModerator) throw new NotTicketOwner();
 
         // Acknowledge before the delete: under request-queue pressure the
