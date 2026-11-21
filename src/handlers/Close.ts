@@ -25,9 +25,13 @@ export class Close extends SlashHandler<'close'> {
         const channel = this.event.channel;
         if (channel?.type !== ChannelType.GuildText) throw new NotTicketChannel();
 
-        if (channel.topic?.startsWith('ticket-owner:') !== true) throw new NotATicket();
+        // The topic carries `ticket-owner:<id>` first, then a `;`-separated
+        // kind marker, so a split reads the owner whether the marker is
+        // there or not, including tickets from before the marker existed.
+        const [ownerPart] = (channel.topic ?? '').split(';');
+        if (ownerPart?.startsWith('ticket-owner:') !== true) throw new NotATicket();
 
-        const isOwner = channel.topic === `ticket-owner:${this.user.id}`;
+        const isOwner = ownerPart === `ticket-owner:${this.user.id}`;
         const isModerator = this.event.memberPermissions.has(PermissionFlagsBits.ManageChannels);
         if (!isOwner && !isModerator) throw new NotTicketOwner();
 
