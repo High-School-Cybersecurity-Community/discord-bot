@@ -17,9 +17,6 @@ const TICKET_WINDOW: RateLimitWindow = { windowMs: 2000 };
 export const TicketThrottle = defineGate('TicketThrottle', async (ctx) => {
     if (ctx.userId === null) return;
 
-    const { limited } = await ctx.core.rateLimiter.charge(
-        buildKey('ticket-create', ctx.userId),
-        TICKET_WINDOW
-    );
+    const { limited } = await ctx.core.rateLimiter.charge(buildKey('ticket-create', ctx.userId), TICKET_WINDOW);
     if (limited) throw new CreatingTooFast();
 });
