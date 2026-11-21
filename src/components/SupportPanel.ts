@@ -24,7 +24,7 @@ export class SupportPanelCard extends BuilderComponent<'container'> {
             .addTextDisplayComponents(
                 (text) => text.setContent('## Support Ticket'),
                 (text) => text.setContent('Create a ticket to speak to the mods'),
-                (text) => text.setContent('-# If the button does not work, please DM a person with the <@1541225527317110824> role.'),
+                (text) => text.setContent('-# If the button does not work, please DM a person with the <@&1541225527317110824> role.'),
             )
             .addActionRowComponents((row) =>
                 row.addComponents(
