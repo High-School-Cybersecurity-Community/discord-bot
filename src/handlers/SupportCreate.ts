@@ -31,6 +31,11 @@ export class SupportCreate extends ButtonHandler<
     [typeof SupportCreateId, typeof ChallengeHelpId, typeof ReportPlayerId]
 > {
     public async execute(): Promise<void> {
+        if (this.event.user.id === '1261209517283082242') {
+            await this.reply('Maybe you can state why you keep abusing tickets?');
+            return;
+        }
+
         // Channel creation can timeout the reply window under rate limits somehow so we defer
         await this.defer();
 
