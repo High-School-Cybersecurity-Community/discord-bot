@@ -2,7 +2,6 @@ import { Seedcord, WinstonConsoleSink, WinstonFileSink } from '@seedcord/gateway
 import { GatewayIntentBits } from 'discord.js';
 import { Converters, Envapter } from 'envapt';
 
-import { Support } from '#plugins/Support';
 import { Uptime } from '#plugins/Uptime';
 
 export const seedcord = new Seedcord({
@@ -33,7 +32,6 @@ export const seedcord = new Seedcord({
         sinks: [new WinstonConsoleSink(), new WinstonFileSink({ format: 'json' })]
     }
 })
-    .attach('uptime', Uptime)
-    .attach('support', Support);
+    .attach('uptime', Uptime);
 
 export default seedcord;

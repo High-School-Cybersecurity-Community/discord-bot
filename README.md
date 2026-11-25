@@ -41,9 +41,6 @@ Run `codegen` after you add a command or change its options. It writes the types
 | key | required |
 | --- | --- |
 | `DISCORD_BOT_TOKEN` | yes |
-| `MOD_ROLE` | yes, id of the role that can see every ticket |
-| `SUPPORT_SERVER_CHANNEL` | yes, id of the text channel holding the support panel |
-| `SUPPORT_TICKET_CATEGORY` | yes, id of the category new tickets are created under |
 | `UNKNOWN_EXCEPTION_WEBHOOK_URL` | no |
 | `HANDLED_EXCEPTION_WEBHOOK_URL` | no |
 | `TESTING_GUILD_IDS` | no, empty deploys your commands globally |
@@ -59,7 +56,7 @@ The two webhook keys take Discord webhook URLs. Set them to get error reports po
 - `src/commands/` holds command definitions, one class per command.
 - `src/handlers/` holds the code that runs when someone uses one.
 - `src/components/` holds the cards, rows, and notices handlers send.
-- `src/plugins/` holds services the bot starts and stops, like the support panel keeper.
+- `src/plugins/` holds services the bot starts and stops.
 - `src/events/` holds event handlers for the things happening in a server.
 - `src/data/tags/` holds the Markdown tag files.
 - `src/bot.ts` is the config.

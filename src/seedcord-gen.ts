@@ -6,14 +6,11 @@ import type Bot from './bot';
 // prettier-ignore
 declare module '@seedcord/gateway' {
     interface Core {
-        support: (typeof Bot)['support'];
         uptime: (typeof Bot)['uptime'];
     }
     interface SlashRegistry {
-        close: { options: {}; cache: 'cached' };
         help: { options: {}; cache: 'cached' };
         ping: { options: { detailed: { kind: 'boolean'; required: false } }; cache: 'cached' };
-        support: { options: {}; cache: 'cached' };
         tags: { options: { tag_name: { kind: 'string'; required: true; choices: ['emails', 'events', 'pecanctf', 'sites'] }; ephemeral: { kind: 'boolean'; required: false } }; cache: 'cached' };
     }
     interface UserContextMenuRegistry {
